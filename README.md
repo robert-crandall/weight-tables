@@ -41,12 +41,7 @@ No build steps required! This is a vanilla HTML, CSS, and JavaScript project.
 
 ## 📦 Deployment
 
-This project is designed to be deployed on GitHub Pages:
-
-1. Push the repository to GitHub
-2. Go to Settings > Pages
-3. Select the branch you want to deploy from (e.g., `main`)
-4. The site will be available at `https://[your-username].github.io/plate-calculator/`
+This project is designed to be deployed on GitHub Pages and is available at https://robert-crandall.github.io/weight-tables/index.html
 
 ## 📄 License
 
