@@ -133,6 +133,20 @@ button:disabled {
     font-size: 10pt;
     line-height: 1.2;
     background: white !important;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+  
+  .print-overflow-visible,
+  .print-ready,
+  .print-ready * {
+    overflow: visible !important;
+  }
+  
+  /* Fix for Chrome print rendering */
+  html, body {
+    height: auto !important;
   }
   
   .container {
@@ -140,6 +154,7 @@ button:disabled {
     max-width: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    overflow: visible !important;
   }
   
   .no-print {
@@ -151,25 +166,37 @@ button:disabled {
     margin: 0 !important;
     box-shadow: none !important;
     border: none !important;
-    width: 100%;
+    width: 100% !important;
     page-break-inside: avoid;
     background: white !important;
+    overflow: visible !important;
+  }
+  
+  #plateTable {
+    overflow: visible !important;
+    width: 100% !important;
   }
   
   table {
     width: 100% !important;
     page-break-inside: auto;
     border-collapse: collapse;
+    table-layout: fixed !important;
+    overflow: visible !important;
   }
   
   tr {
     page-break-inside: avoid;
     page-break-after: auto;
+    width: 100%;
   }
 
   td, th {
     padding: 3pt !important;
     font-size: 9pt;
+    overflow: visible !important;
+    white-space: normal !important;
+    max-width: 100%;
   }
   
   .bar-visualization {
@@ -199,6 +226,20 @@ button:disabled {
   @page {
     size: landscape;
     margin: 0.5cm;
+  }
+  
+  /* Hide scrollbars specifically */
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  
+  /* Ensure columns have a reasonable width */
+  th, td {
+    word-break: break-word;
+    min-width: 40pt; /* Minimum width for each column */
+    box-sizing: border-box;
   }
   
   /* Black and white color scheme for printing */

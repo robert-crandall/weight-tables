@@ -121,13 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const weightPerSide = (targetWeight - barbellWeight) / 2;
     
     if (weightPerSide < 0) {
-      return { possible: false, plateCombo: [], message: 'Target weight less than barbell' };
+      return { possible: false, plateCombo: [], onlySplitPlates: false, message: 'Target weight less than barbell' };
     }
     
     if (weightPerSide === 0) {
-      return { possible: true, plateCombo: [], message: 'Empty bar' };
+      return { possible: true, plateCombo: [], onlySplitPlates: false, message: 'Empty bar' };
     }
-    
+
     // Make a copy of available plates to track usage
     const remainingPlates = [...availablePlates];
     const plateCombo = [];
@@ -144,15 +144,20 @@ document.addEventListener('DOMContentLoaded', () => {
         i--; // Adjust index after removing an element
       }
     }
+
+    // Check if it's using only the 45s and 25s
+    const usedPlates = [...new Set(plateCombo)];
+    const onlySplitPlates = [...usedPlates].every(plate => [45, 25].includes(plate));
     
     // Check if we hit the target exactly
     if (currentWeight === weightPerSide) {
-      return { possible: true, plateCombo };
+      return { possible: true, plateCombo, onlySplitPlates };
     } else {
-      return { 
-        possible: false, 
-        plateCombo, 
-        message: `Can't make exact weight (closest: ${barbellWeight + currentWeight * 2})` 
+      return {
+        possible: false,
+        plateCombo,
+        onlySplitPlates,
+        message: `Can't make exact weight (closest: ${barbellWeight + currentWeight * 2})`
       };
     }
   }
@@ -205,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function generateMicroIncrements() {
     // Standard micro increments (in lbs)
-    return [0, 5, 10, 15, 20, 25, 30, 35, 40, 45];
+    return [5, 10, 15, 20, 25, 30, 35, 40, 45];
   }
   
   /**
@@ -215,11 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.createElement('div');
     container.className = 'bar-visualization' + (bwMode ? ' bw-mode' : '');
     
-    // Create plates from inside out (reverse the plateCombo)
-    const reversedPlates = [...plateCombo].reverse();
-    
     // Just one side plates (reversed order to show largest plates on the outside)
-    reversedPlates.forEach(weight => {
+    plateCombo.forEach(weight => {
       const plateContainer = document.createElement('div');
       plateContainer.className = 'plate-container';
       
@@ -259,14 +261,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Create table
     const table = document.createElement('table');
-    table.className = 'min-w-full border-collapse';
+    table.className = 'min-w-full border-collapse table-fixed';
     
     // Create header row
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     const cornerCell = document.createElement('th');
     cornerCell.className = 'border px-4 py-2 bg-gray-200';
-    cornerCell.textContent = 'Base / Add';
+    cornerCell.textContent = 'Base';
+    cornerCell.style.width = '60px'; // Fixed width for base column
     headerRow.appendChild(cornerCell);
     
     // Add micro increment headers
@@ -287,11 +290,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (baseWeight < startingWeight || baseWeight > endingWeight) return;
       
       const row = document.createElement('tr');
-      
+      let skipRestofRow = false;
+
       // First cell is the base weight
       const baseCell = document.createElement('td');
-      baseCell.className = 'border px-4 py-2 bg-gray-100 font-bold';
+      baseCell.className = 'border px-4 py-2 bg-gray-100 font-bold text-center';
       baseCell.textContent = `${baseWeight} lbs`;
+      const basePlateCombo = calculatePlateCombo(baseWeight, barbellWeight, availablePlates);
+      const baseVisualization = createPlateVisualization(basePlateCombo.plateCombo, bwMode);
+      baseCell.appendChild(baseVisualization);
       row.appendChild(baseCell);
       
       // Generate cells for each micro increment
@@ -307,11 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         const result = calculatePlateCombo(targetWeight, barbellWeight, availablePlates);
-        
+        if (result.onlySplitPlates) {
+          // If using only the largest plates, skip the rest of the row
+          skipRestofRow = true;
+        }
+
         const cell = document.createElement('td');
         cell.className = 'border px-2 py-2 weight-cell text-center';
         
-        if (result.possible) {
+        if (result.possible && !skipRestofRow) {
           // Create weight display
           const weightDisplay = document.createElement('div');
           weightDisplay.className = 'total-weight';
@@ -377,6 +388,18 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Please calculate plate combinations first.');
       return;
     }
+    
+    // Add print-specific class to parent elements to ensure no scrollbars
+    const results = document.getElementById('results');
+    results.classList.add('print-ready');
+    
+    // Make sure table cells have proper width set
+    const tableHeaders = document.querySelectorAll('th');
+    tableHeaders.forEach(th => {
+      if (!th.style.width) {
+        th.style.width = (100 / tableHeaders.length) + '%';
+      }
+    });
     
     window.print();
   }
