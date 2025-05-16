@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbell Plate Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto p-4">
+        <header class="text-center py-6 no-print">
+            <h1 class="text-3xl font-bold mb-2">🏋️ Barbell Plate Calculator</h1>
+            <p class="text-gray-600">Calculate your barbell plate combinations for different weights</p>
+        </header>
+
+        <div class="bg-white rounded-lg shadow p-6 mb-8 no-print">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold mb-4">Equipment Setup</h2>
+                    
+                    <div>
+                        <label for="barbellWeight" class="block text-sm font-medium text-gray-700">Barbell Weight (lbs)</label>
+                        <input type="number" id="barbellWeight" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="45">
+                    </div>
+
+                    <div>
+                        <label for="availablePlates" class="block text-sm font-medium text-gray-700">Available Plates (format: weight×quantity, e.g., 45x2, 25, 10x2, 5, 2.5)</label>
+                        <input type="text" id="availablePlates" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="45x2, 25, 10x2, 5, 2.5">
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold mb-4">Weight Range</h2>
+                    
+                    <div>
+                        <label for="startingWeight" class="block text-sm font-medium text-gray-700">Starting Weight (lbs)</label>
+                        <input type="number" id="startingWeight" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="45">
+                    </div>
+
+                    <div>
+                        <label for="endingWeight" class="block text-sm font-medium text-gray-700">Ending Weight (lbs)</label>
+                        <input type="number" id="endingWeight" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="305">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 space-y-4">
+                <h2 class="text-xl font-bold mb-4">Plate Colors</h2>
+                <div id="plateColors" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <!-- Color inputs will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="flex items-center mt-4">
+                    <input type="checkbox" id="colorToggle" class="h-4 w-4 text-blue-600 rounded">
+                    <label for="colorToggle" class="ml-2 text-sm text-gray-700">Use black and white (for printing)</label>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <button id="calculateBtn" class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition">
+                    Calculate Plate Combinations
+                </button>
+                <button id="printBtn" class="ml-4 px-6 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition">
+                    Print Results
+                </button>
+            </div>
+        </div>
+
+        <div id="results" class="bg-white rounded-lg shadow p-4 print-container">
+            <h2 class="text-xl font-bold mb-4 no-print">Results</h2>
+            <div id="plateTable" class="overflow-x-auto">
+                <!-- Results table will be inserted here by JavaScript -->
+                <p id="noResults" class="text-center py-4 text-gray-500">Calculate to see plate combinations</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="mt-8 py-4 text-center text-gray-500 text-sm no-print">
+        <p>Barbell Plate Calculator - Optimized for print</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

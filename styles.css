@@ -1,0 +1,243 @@
+/* Main styles */
+:root {
+  --plate-45: #0066cc;
+  --plate-35: #ffcc00;
+  --plate-25: #00cc66;
+  --plate-10: #999999;
+  --plate-5: #333333;
+  --plate-2-5: #cccccc;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+input[type="number"], input[type="text"] {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Plate visualization */
+.bar-visualization {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  height: 40px;
+}
+
+.plate-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 2px;
+}
+
+.plate {
+  width: 20px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.plate-weight-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.6rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.plate-weight {
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.plate-45 {
+  height: 36px;
+  background-color: var(--plate-45);
+}
+
+.plate-35 {
+  height: 32px;
+  background-color: var(--plate-35);
+}
+
+.plate-25 {
+  height: 28px;
+  background-color: var(--plate-25);
+}
+
+.plate-10 {
+  height: 24px;
+  background-color: var(--plate-10);
+}
+
+.plate-5 {
+  height: 20px;
+  background-color: var(--plate-5);
+}
+
+.plate-2-5 {
+  height: 16px;
+  background-color: var(--plate-2-5);
+}
+
+/* Color picker styling */
+.color-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-preview {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Table styling */
+.weight-cell {
+  position: relative;
+}
+
+.total-weight {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.plate-breakdown {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* Print styles */
+@media print {
+  body {
+    font-size: 10pt;
+    line-height: 1.2;
+    background: white !important;
+  }
+  
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100%;
+    page-break-inside: avoid;
+    background: white !important;
+  }
+  
+  table {
+    width: 100% !important;
+    page-break-inside: auto;
+    border-collapse: collapse;
+  }
+  
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  td, th {
+    padding: 3pt !important;
+    font-size: 9pt;
+  }
+  
+  .bar-visualization {
+    height: 25px;
+  }
+  
+  .plate {
+    width: 15px;
+  }
+  
+  .plate-weight-text {
+    font-size: 6pt;
+  }
+  
+  .plate-weight {
+    font-size: 7pt;
+  }
+  
+  .total-weight {
+    font-size: 10pt;
+  }
+  
+  .plate-breakdown {
+    font-size: 8pt;
+  }
+  
+  @page {
+    size: landscape;
+    margin: 0.5cm;
+  }
+  
+  /* Black and white color scheme for printing */
+  .bw-mode .plate {
+    background-color: #000 !important;
+    border: 1px solid #000;
+  }
+  
+  .bw-mode .plate-weight-text {
+    color: white !important;
+  }
+  
+  .bw-mode .plate-45 {
+    height: 36px;
+    opacity: 0.9;
+  }
+  
+  .bw-mode .plate-35 {
+    height: 32px;
+    opacity: 0.75;
+  }
+  
+  .bw-mode .plate-25 {
+    height: 28px;
+    opacity: 0.6;
+  }
+  
+  .bw-mode .plate-10 {
+    height: 24px;
+    opacity: 0.45;
+  }
+  
+  .bw-mode .plate-5 {
+    height: 20px;
+    opacity: 0.3;
+  }
+  
+  .bw-mode .plate-2-5 {
+    height: 16px;
+    opacity: 0.15;
+  }
+}
